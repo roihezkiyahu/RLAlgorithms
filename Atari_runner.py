@@ -105,7 +105,7 @@ def train_agent(config_path, conv_layers_params=None, fc_layers=None, continuous
         conv_layers_params = conv_layers_params.copy()
     else:
         conv_layers_params = config.get("conv_layers_params", None)
-    fc_layers = fc_layers if not fc_layers is None else config["fc_layers"]
+    fc_layers = fc_layers if not fc_layers is None else config.get("fc_layers", None)
     if game is None:
         game = initialize_game(config, continuous)
     game_wrapper = get_game_wrapper(game, config, game_wrapper)
@@ -208,17 +208,11 @@ if __name__ == "__main__":
     # train_agent(config_path, conv_layers_params, fc_layers, dueling, game=SnakeGame(10, 10, 10, default_start_prob=0.1),
     #             game_wrapper=SnakeGameWrap)
 
-    layer_params = [
-        {'out_features': 256},
-        {'out_features': 128},
-        {'out_features': 64},
-    ]
-
     # config_path = os.path.join("modeling", "configs", "cart_pole.yaml")
     # train_agent(config_path, None, None)
 
-    config_path = os.path.join("modeling", "configs", "cart_pole_dsp1.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "cart_pole_dsp1.yaml")
+    # train_agent(config_path, None, None)
 
     config_path = os.path.join("modeling", "configs", "cart_pole_update10.yaml")
     train_agent(config_path, None, None)
