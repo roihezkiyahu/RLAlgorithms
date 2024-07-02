@@ -101,7 +101,10 @@ def create_models(config, game_wrapper, conv_layers_params, fc_layers, dueling, 
 def train_agent(config_path, conv_layers_params, fc_layers, continuous=None, a2c=False,
                 game_wrapper=None, game=None, ppo=False):
     config = load_config(config_path)
-    conv_layers_params = conv_layers_params.copy() if not conv_layers_params is None else None
+    if not conv_layers_params is None:
+        conv_layers_params = conv_layers_params.copy()
+    else:
+        conv_layers_params = config.get("conv_layers_params", None)
     fc_layers = fc_layers if not fc_layers is None else config["fc_layers"]
     if game is None:
         game = initialize_game(config, continuous)
@@ -211,8 +214,8 @@ if __name__ == "__main__":
         {'out_features': 64},
     ]
 
-    config_path = os.path.join("modeling", "configs", "cart_pole.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "cart_pole.yaml")
+    # train_agent(config_path, None, None)
 
     config_path = os.path.join("modeling", "configs", "cart_pole_dsp1.yaml")
     train_agent(config_path, None, None)

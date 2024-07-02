@@ -51,3 +51,29 @@ atari_game_wrapper:
   losing_live_penalty: 5
   normalize_factor: 255
   frame_skip: 3
+
+  conv_layers_params:
+    - in_channels: 4
+      out_channels: 8
+      kernel_size: 7
+      stride: 4
+      padding: 1
+    - in_channels: 8
+      out_channels: 16
+      kernel_size: 7
+      stride: 4
+      padding: 1
+    - in_channels: 16
+      out_channels: 32
+      kernel_size: 5
+      stride: 2
+      padding: 1
+    - in_channels: 32
+      out_channels: 64
+      kernel_size: 3
+      stride: 2
+      padding: 1
+
+  fc_layers:
+    - 256
+    - 128
