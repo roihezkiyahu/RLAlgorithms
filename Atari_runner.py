@@ -98,7 +98,7 @@ def create_models(config, game_wrapper, conv_layers_params, fc_layers, dueling, 
     return model, clone_model
 
 
-def train_agent(config_path, conv_layers_params, fc_layers, continuous=None, a2c=False,
+def train_agent(config_path, conv_layers_params=None, fc_layers=None, continuous=None, a2c=False,
                 game_wrapper=None, game=None, ppo=False):
     config = load_config(config_path)
     if not conv_layers_params is None:
