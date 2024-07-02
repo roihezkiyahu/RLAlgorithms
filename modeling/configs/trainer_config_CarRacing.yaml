@@ -1,0 +1,52 @@
+trainer:
+  game: "CarRacing-v2"
+  render_mode: "rgb_array"
+  episodes: 15000
+  learning_rate: 5e-3
+  gamma: 0.9
+  n_memory_episodes: 250
+  prefix_name: ""
+  folder: "logging/CarRacing_le5e3"
+  save_gif_every_x_epochs: 50
+  batch_size: 128
+  EPS_START: 1
+  EPS_END: 0.05
+  EPS_DECAY: 250
+  TAU: 5e-4
+  max_episode_len: 500
+  use_ddqn: true
+  replaymemory: 25000
+  optimizer: null
+  per_alpha: 0
+  use_scheduler: false
+  validate_every_n_episodes: 250
+  validate_episodes: 50
+  patience: 3
+  game_wrapper: null
+  visualizer: null
+  gif_fps: 20
+  update_every_n_steps: 5
+  update_target_every_n_steps: 25
+  save_diagnostics: 500
+  clip_grad: 0
+  save_model_every_n: 5
+  reset_options:
+    randomize_position: false
+  warmup_steps: 5000
+  value_network_lr: 1e-4 # for A2C only
+  actor_network_lr: 1e-4 # for A2C only
+  entropy_coefficient: 0.01 # for A2C only
+  input_shape: (11, 12, 12) # for A2C only
+  epochs: 15000 # for A2C only
+  early_stopping: 30
+
+atari_game_wrapper:
+  resize_img: null
+  gray_scale: true
+  random_envs: 0
+  default_start_prob: 0.25
+  random_steps_range: [10, 50]
+  stack_n_frames: 3
+  normalize_factor: 255
+  initial_frame_skip: 35
+  frame_skip: null

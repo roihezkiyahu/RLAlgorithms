@@ -1,0 +1,60 @@
+trainer:
+  game: "LunarLander-v2"
+  render_mode: "rgb_array"
+  episodes: 5000
+  learning_rate: 1e-4
+  gamma: 0.99
+  n_memory_episodes: 250
+  prefix_name: ""
+  folder: "logging/LunarLander_dsp01"
+  save_gif_every_x_epochs: 250
+  batch_size: 128
+  EPS_START: 1
+  EPS_END: 0.05
+  EPS_DECAY: 250
+  TAU: 5e-4
+  max_episode_len: 1000
+  use_ddqn: true
+  replaymemory: 10000
+  optimizer: null
+  per_alpha: 0
+  use_scheduler: false
+  validate_every_n_episodes: 250
+  validate_episodes: 100
+  patience: 3
+  game_wrapper: null
+  visualizer: null
+  gif_fps: 20
+  update_every_n_steps: 1
+  update_target_every_n_steps: 1
+  save_diagnostics: 500
+  clip_grad: 0
+  save_model_every_n: 5
+  reset_options:
+    randomize_position: false
+  warmup_steps: 1000
+  value_network_lr: 1e-4 # for A2C only
+  actor_network_lr: 1e-4 # for A2C only
+  entropy_coefficient: 0.01 # for A2C only
+  input_shape: (11, 12, 12) # for A2C only
+  epochs: 15000 # for A2C only
+  dueling: true
+  use_cnn: false
+  early_stopping: 30
+
+
+atari_game_wrapper:
+  resize_img: null
+  gray_scale: true
+  random_envs: 0
+  default_start_prob: 0.1
+  random_steps_range: [5, 100]
+  stack_n_frames: 0
+  losing_live_penalty: 0
+  normalize_factor: 1
+  frame_skip: null
+
+fc_layers:
+  - out_features: 256
+  - out_features: 128
+  - out_features: 64
