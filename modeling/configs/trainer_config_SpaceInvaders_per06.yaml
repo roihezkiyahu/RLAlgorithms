@@ -4,10 +4,10 @@ trainer:
   episodes: 50000
   learning_rate: 5e-5
   gamma: 0.99
-  n_memory_episodes: 250
+  n_memory_episodes: 500
   prefix_name: ""
   folder: "logging/SpaceInvadersNoFrameskip_5e5_per06_llp100_sdp01_bs64"
-  save_gif_every_x_epochs: 250
+  save_gif_every_x_epochs: 500
   batch_size: 64
   EPS_START: 1
   EPS_END: 0.1
@@ -27,7 +27,7 @@ trainer:
   gif_fps: 20
   update_every_n_steps: 10
   update_target_every_n_steps: 50
-  save_diagnostics: 500
+  save_diagnostics: 1000
   clip_grad: 0
   save_model_every_n: 5
   reset_options:
