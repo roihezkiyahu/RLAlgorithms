@@ -214,66 +214,62 @@ if __name__ == "__main__":
     # config_path = os.path.join("modeling", "configs", "cart_pole_dsp1.yaml")
     # train_agent(config_path, None, None)
 
-    config_path = os.path.join("modeling", "configs", "cart_pole_update10.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "cart_pole_update10.yaml")
+    # train_agent(config_path, None, None)
 
-    config_path = os.path.join("modeling", "configs", "MountainCar.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "MountainCar.yaml") # rerun
+    # train_agent(config_path, None, None)
+    #
+    # config_path = os.path.join("modeling", "configs", "Acrobot.yaml")
+    # train_agent(config_path, None, None)
+    #
+    # config_path = os.path.join("modeling", "configs", "LunarLander.yaml")
+    # train_agent(config_path, None, None)
 
-    config_path = os.path.join("modeling", "configs", "Acrobot.yaml")
-    train_agent(config_path, None, None)
 
-    config_path = os.path.join("modeling", "configs", "LunarLander.yaml")
-    train_agent(config_path, None, None)
-
-
-    conv_layers_params = [
-        {'in_channels': 4, 'out_channels': 8, 'kernel_size': 7, 'stride': 4, 'padding': 1},
-        {'in_channels': 8, 'out_channels': 16, 'kernel_size': 7, 'stride': 4, 'padding': 1},
-        {'in_channels': 16, 'out_channels': 32, 'kernel_size': 5, 'stride': 2, 'padding': 1},
-        {'in_channels': 32, 'out_channels': 64, 'kernel_size': 3, 'stride': 2, 'padding': 1}]
-    fc_layers = [256, 128]
+    conv_layers_params = None
+    fc_layers = None
 
     # MsPacmanNoFrameskip
     # config_path = os.path.join("modeling", "configs", "trainer_config_MsPacman.yaml")
     # train_agent(config_path, conv_layers_params, fc_layers)
 
     config_path = os.path.join("modeling", "configs", "trainer_config_MsPacman_llp500.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None, a2c=True)
 
     # SpaceInvaders
     config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None)
 
     config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_llp50.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None)
 
     config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_llp250.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None)
 
     # config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_gamma999.yaml")
     # train_agent(config_path, conv_layers_params, fc_layers)
 
     # Breakout
     config_path = os.path.join("modeling", "configs", "trainer_config_Breakout.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None)
 
     config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp5.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None)
 
     config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp10.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None)
 
     # SkiingDeterministic
     config_path = os.path.join("modeling", "configs", "trainer_config_Skiing.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None)
 
     config_path = os.path.join("modeling", "configs", "trainer_config_Skiing_gamma999.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers)
+    train_agent(config_path, None, None)
 
     # CarRacing
     config_path = os.path.join("modeling", "configs", "trainer_config_CarRacing.yaml")
-    train_agent(config_path, conv_layers_params, fc_layers, continuous=False)
+    train_agent(config_path, None, None, continuous=False)
 
 
 

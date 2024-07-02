@@ -105,9 +105,15 @@ class A2CDebugger():
         running_avg_3 = Debugger.moving_average(scores, min(window * 3, n_scores))
         running_avg_5 = Debugger.moving_average(scores, min(window * 5, n_scores))
         plt.plot(range(1, n_scores + 1), scores, label='Score')
-        plt.plot(range(window, n_scores + 1), running_avg, label=f'Running Average {window}', linestyle='dashed')
-        plt.plot(range(window * 3, n_scores + 1), running_avg_3, label=f'Running Average {window * 3}', linestyle='dashed')
-        plt.plot(range(window * 5, n_scores + 1), running_avg_5, label=f'Running Average {window * 5}', linestyle='dashed')
+        try:
+            plt.plot(np.array((range(window, n_scores + 1))), running_avg, label=f'Running Average {window}',
+                     linestyle='dashed')
+            plt.plot(np.array((range(window*3, n_scores + 1))), running_avg_3, label=f'Running Average {window * 3}',
+                     linestyle='dashed')
+            plt.plot(np.array((range(window*5, n_scores + 1))), running_avg_5, label=f'Running Average {window * 5}',
+                     linestyle='dashed')
+        except:
+            pass
         plt.title('Rewards History')
         plt.xlabel('Game Number')
         plt.ylabel('Score')
