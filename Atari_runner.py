@@ -4,7 +4,6 @@ from modeling.AtariGameWrapper import AtariGameWrapper
 import os
 import gymnasium as gym
 import ale_py
-
 gym.register_envs(ale_py)
 from modeling.A2C import A2CAgent
 from modeling.PPO import PPOAgent
