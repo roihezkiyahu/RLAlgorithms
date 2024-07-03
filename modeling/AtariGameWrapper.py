@@ -136,6 +136,7 @@ class AtariGameWrapper:
 #         return seed
 
     def reset(self, options={}):
+        self.game.close()
         self.episode_rewards, rand_start = np.array([]), False
         validation = options.get('validation', False)
         if options.get('randomize_position', False) and not validation:
