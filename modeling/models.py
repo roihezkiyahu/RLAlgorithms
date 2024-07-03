@@ -132,20 +132,27 @@ class DQN(nn.Module):
 
 
 class ActorCritic(nn.Module):
-    def __init__(self, input_shape, action_size, conv_layers_params, fc_layers, mode='actor', use_instance_norm=False):
+    def __init__(self, input_shape, action_size, conv_layers_params=None, fc_layers=[], mode='actor', use_instance_norm=False):
         super(ActorCritic, self).__init__()
 
         self.mode = mode
         self.use_instance_norm = use_instance_norm
         self.conv_layers = nn.ModuleList()
-        for params in conv_layers_params:
-            self.conv_layers.append(nn.Conv2d(**params))
-            if self.use_instance_norm:
-                self.conv_layers.append(nn.InstanceNorm2d(params['out_channels']))
 
-        self.fc_input_dim = self._feature_size(input_shape)
+        if conv_layers_params:
+            for params in conv_layers_params:
+                self.conv_layers.append(nn.Conv2d(**params))
+                if self.use_instance_norm:
+                    self.conv_layers.append(nn.InstanceNorm2d(params['out_channels']))
+
+            self.fc_input_dim = self._feature_size(input_shape)
+        else:
+            # If no conv layers, the input shape should be flattened
+            self.fc_input_dim = input_shape[0]
 
         self.fc_layers = nn.ModuleList()
+        if isinstance(fc_layers[0], dict):
+            fc_layers = list(list(layer.values())[0] for layer in fc_layers)
         for i, units in enumerate(fc_layers):
             in_features = self.fc_input_dim if i == 0 else fc_layers[i - 1]
             self.fc_layers.append(nn.Linear(in_features, units))
@@ -158,15 +165,13 @@ class ActorCritic(nn.Module):
             self.output_layer = nn.Linear(fc_layers[-1], 1)
 
     def forward(self, x):
-        x = self._apply_layers(self.conv_layers, x)
-        x = x.view(x.size(0), -1)
+        if self.conv_layers:
+            x = self._apply_layers(self.conv_layers, x)
+            x = x.view(x.size(0), -1)  # Flatten the tensor
         x = self._apply_layers(self.fc_layers, x)
         x = self.output_layer(x)
 
-        if self.mode == 'actor':
-            return x
-        else:
-            return x
+        return x
 
     def _apply_layers(self, layers, x):
         for layer in layers:

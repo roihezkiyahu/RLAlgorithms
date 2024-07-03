@@ -6,7 +6,7 @@ trainer:
   gamma: 0.95
   n_memory_episodes: 500
   prefix_name: ""
-  folder: "logging/BreakoutNoFrameskip_llp10"
+  folder: "logging/BreakoutNoFrameskip_llp5"
   save_gif_every_x_epochs: 500
   batch_size: 128
   EPS_START: 1
@@ -39,6 +39,7 @@ trainer:
   input_shape: (11, 12, 12) # for A2C only
   epochs: 150000 # for A2C only
   early_stopping: 30
+  a2c: true
 
 
 atari_game_wrapper:
@@ -48,7 +49,7 @@ atari_game_wrapper:
   default_start_prob: 0.5
   random_steps_range: [10, 100]
   stack_n_frames: 4
-  losing_live_penalty: 10
+  losing_live_penalty: 5
   normalize_factor: 255
   frame_skip: 3
 

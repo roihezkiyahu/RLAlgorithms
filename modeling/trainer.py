@@ -342,6 +342,9 @@ class Trainer:
         mean_reward, mean_score = int(np.nanmean(relevant_rewards)), np.nanmean(relevant_scores)
         med_score, max_score = np.nanmedian(relevant_scores), np.nanmax(relevant_scores)
         if not validation:
+            if np.nanstd(relevant_scores) == 0:  # validation wont work no randomness in attari
+                mean_score = np.nanmean(self.score_memory[-self.n_memory_episodes:])
+                med_score = np.nanmedian(self.score_memory[-self.n_memory_episodes:])
             print(
                 f"Episodes {episode + 1 - self.n_memory_episodes}-{episode + 1}: Min Reward: {min_reward:.2f},"
                 f" Max Reward: {max_reward:.2f}, Mean Reward: {mean_reward:.2f}, Mean Score: {mean_score:.2f},"
@@ -436,7 +439,7 @@ class Trainer:
 
     def on_validation_end(self, episode, rewards, scores, viz_score):
         self.print_epoch_summary(episode, rewards, scores, True)
-        mean_score = np.nanmean(scores)
+        mean_score, med_score = np.nanmean(scores), np.nanmedian(scores)
         self.game_wrapper.on_validation_end(episode, rewards, scores)
         self.model.train()
         self.save_validation_gif(episode, viz_score)
@@ -444,7 +447,10 @@ class Trainer:
             self.scheduler.step(mean_score)
             for param_group in self.optimizer.param_groups:
                 print("Current LR:", param_group['lr'])
-        self.validation_log.append({"episode": episode+1, "Mean Score": mean_score, "Median Score": np.nanmedian(scores)})
+        if np.nanstd(scores) == 0: # validation wont work no randomness in attari
+            mean_score = np.nanmean(self.score_memory[-self.n_memory_episodes:])
+            med_score = np.nanmedian(self.score_memory[-self.n_memory_episodes:])
+        self.validation_log.append({"episode": episode+1, "Mean Score": mean_score, "Median Score": med_score})
         self.save_validation_csv()
         self.plot_validation_convergence()
         if ((episode+1)//self.validate_every_n_episodes) % self.save_model_every_n == 0:

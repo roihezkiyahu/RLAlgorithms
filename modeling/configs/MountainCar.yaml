@@ -37,7 +37,7 @@ trainer:
   actor_network_lr: 1e-4 # for A2C only
   entropy_coefficient: 0.01 # for A2C only
   input_shape: (11, 12, 12) # for A2C only
-  epochs: 15000 # for A2C only
+  epochs: 150000 # for A2C only
   dueling: true
   use_cnn: false
   early_stopping: 30

@@ -2,7 +2,10 @@ from modeling.models import CNNDQNAgent, DQN, ActorCritic
 from modeling.trainer import Trainer
 from modeling.AtariGameWrapper import AtariGameWrapper
 import os
-import gym
+import gymnasium as gym
+import ale_py
+
+gym.register_envs(ale_py)
 from modeling.A2C import A2CAgent
 from modeling.PPO import PPOAgent
 import yaml
@@ -69,16 +72,17 @@ def initialize_trainer(config, model, clone_model):
 
 def fix_groups_and_input(input_shape, conv_layers_params):
     num_channels = input_shape[0]
-    first_layer = conv_layers_params[0]
-    if "in_channels" in first_layer.keys():
-        in_channels = first_layer["in_channels"]
-        if in_channels != num_channels:
-            print(f"wrong number of input channels: expected {in_channels} got {num_channels}, changed number of input channels")
-            first_layer["in_channels"] = num_channels
-            if "groups" in first_layer.keys():
-                first_layer["groups"] = num_channels
-                first_layer["out_channels"] = num_channels
-                conv_layers_params[1]["in_channels"] = num_channels
+    if not conv_layers_params is None:
+        first_layer = conv_layers_params[0]
+        if "in_channels" in first_layer.keys():
+            in_channels = first_layer["in_channels"]
+            if in_channels != num_channels:
+                print(f"wrong number of input channels: expected {in_channels} got {num_channels}, changed number of input channels")
+                first_layer["in_channels"] = num_channels
+                if "groups" in first_layer.keys():
+                    first_layer["groups"] = num_channels
+                    first_layer["out_channels"] = num_channels
+                    conv_layers_params[1]["in_channels"] = num_channels
 
 
 def create_models(config, game_wrapper, conv_layers_params, fc_layers, dueling, use_cnn=True):
@@ -125,7 +129,6 @@ def train_agent(config_path, conv_layers_params=None, fc_layers=None, continuous
         trainer.train()
     finally:
         pass
-
 
 if __name__ == "__main__":
     #
@@ -234,8 +237,11 @@ if __name__ == "__main__":
     # config_path = os.path.join("modeling", "configs", "trainer_config_MsPacman.yaml")
     # train_agent(config_path, conv_layers_params, fc_layers)
 
-    config_path = os.path.join("modeling", "configs", "trainer_config_MsPacman_llp500.yaml")
-    train_agent(config_path, None, None, a2c=True)
+    config_path = os.path.join("modeling", "configs", "trainer_config_a2c_MsPacman_llp500_bs128.yaml")
+    train_agent(config_path, None, None)
+
+    config_path = os.path.join("modeling", "configs", "trainer_config_a2c_Breakout_llp5.yaml")
+    train_agent(config_path, None, None)
 
     # SpaceInvaders
     config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders.yaml")
