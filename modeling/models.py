@@ -67,6 +67,7 @@ class CNNDQNAgent(nn.Module):
         with torch.no_grad():
             x = torch.zeros(1, *input_shape)
             x = self._apply_layers(self.conv_layers, x)
+            print("after convolution dim: ", x.size())
             return x.view(1, -1).size(1)
 
 
@@ -185,4 +186,5 @@ class ActorCritic(nn.Module):
         with torch.no_grad():
             x = torch.zeros(1, *input_shape)
             x = self._apply_layers(self.conv_layers, x)
+            print("after convolution dim: ", x.size())
             return x.view(1, -1).size(1)

@@ -342,14 +342,14 @@ class Trainer:
         mean_reward, mean_score = int(np.nanmean(relevant_rewards)), np.nanmean(relevant_scores)
         med_score, max_score = np.nanmedian(relevant_scores), np.nanmax(relevant_scores)
         if not validation:
-            if np.nanstd(relevant_scores) == 0:  # validation wont work no randomness in attari
-                mean_score = np.nanmean(self.score_memory[-self.n_memory_episodes:])
-                med_score = np.nanmedian(self.score_memory[-self.n_memory_episodes:])
             print(
                 f"Episodes {episode + 1 - self.n_memory_episodes}-{episode + 1}: Min Reward: {min_reward:.2f},"
                 f" Max Reward: {max_reward:.2f}, Mean Reward: {mean_reward:.2f}, Mean Score: {mean_score:.2f},"
                 f" Median Score: {med_score:.2f}, Max Score: {max_score:.2f}")
         else:
+            if np.nanstd(relevant_scores) == 0:  # validation wont work no randomness in attari
+                mean_score = np.nanmean(self.score_memory[-self.n_memory_episodes:])
+                med_score = np.nanmedian(self.score_memory[-self.n_memory_episodes:])
             print(
                 f"Episode {episode +1} Validation: Min Reward: {min_reward:.2f},"
                 f" Max Reward: {max_reward:.2f}, Mean Reward: {mean_reward:.2f}, Mean Score: {mean_score:.2f},"

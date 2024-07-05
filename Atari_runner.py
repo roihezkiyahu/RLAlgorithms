@@ -4,6 +4,7 @@ from modeling.AtariGameWrapper import AtariGameWrapper
 import os
 import gymnasium as gym
 import ale_py
+
 gym.register_envs(ale_py)
 from modeling.A2C import A2CAgent
 from modeling.PPO import PPOAgent
@@ -236,10 +237,10 @@ if __name__ == "__main__":
     # config_path = os.path.join("modeling", "configs", "trainer_config_MsPacman.yaml")
     # train_agent(config_path, conv_layers_params, fc_layers)
 
-    config_path = os.path.join("modeling", "configs", "trainer_config_a2c_MsPacman_llp500_bs128.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "trainer_config_MsPacman.yaml")
+    # train_agent(config_path, None, None)
 
-    config_path = os.path.join("modeling", "configs", "trainer_config_a2c_Breakout_llp5.yaml")
+    config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp5.yaml")
     train_agent(config_path, None, None)
 
     # SpaceInvaders
