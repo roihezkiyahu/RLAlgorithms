@@ -11,6 +11,7 @@ from modeling.PPO import PPOAgent
 import yaml
 
 
+
 def common_training_setup(config, game, game_wrapper, conv_layers_params, fc_layers):
     state, info = game_wrapper.reset()
     input_shape, output_size = state.shape, game.action_space.n
