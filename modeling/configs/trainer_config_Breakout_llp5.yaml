@@ -6,12 +6,12 @@ trainer:
   gamma: 0.95
   n_memory_episodes: 500
   prefix_name: ""
-  folder: "logging/BreakoutNoFrameskip_llp5"
+  folder: "logging/BreakoutNoFrameskip_llp5_epsdecay1500"
   save_gif_every_x_epochs: 500
   batch_size: 128
   EPS_START: 1
   EPS_END: 0.1
-  EPS_DECAY: 500
+  EPS_DECAY: 1500
   TAU: 5e-4
   max_episode_len: 2000
   use_ddqn: true
@@ -76,4 +76,3 @@ conv_layers_params:
 
 fc_layers:
   - 256
-  - 128

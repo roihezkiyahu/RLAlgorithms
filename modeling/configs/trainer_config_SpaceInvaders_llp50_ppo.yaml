@@ -6,9 +6,9 @@ trainer:
   gamma: 0.99
   n_memory_episodes: 500
   prefix_name: ""
-  folder: "logging/SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs64"
+  folder: "logging/SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs128_ppo"
   save_gif_every_x_epochs: 500
-  batch_size: 64
+  batch_size: 128
   EPS_START: 1
   EPS_END: 0.1
   EPS_DECAY: 250
@@ -39,6 +39,7 @@ trainer:
   input_shape: (11, 12, 12) # for A2C only
   epochs: 150000 # for A2C only
   early_stopping: 30
+  ppo: true
 
 
 atari_game_wrapper:
