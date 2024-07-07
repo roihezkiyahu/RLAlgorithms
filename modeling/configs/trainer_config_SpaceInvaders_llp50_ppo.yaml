@@ -39,7 +39,7 @@ trainer:
   input_shape: (11, 12, 12) # for A2C only
   epochs: 150000 # for A2C only
   early_stopping: 30
-  clip_epsilon: 0.2
+  clip_epsilon: 0.5
   ppo: true
 
 

@@ -1,5 +1,9 @@
-from Atari_runner import train_agent
 import os
+print(os.getcwd())
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from Atari_runner import train_agent
 import argparse
 
 def get_args():
@@ -29,4 +33,9 @@ def get_args():
 
     return args_parser.parse_args()
 
-train_agent(get_args())
+
+args = get_args()
+
+print(args)
+
+train_agent(args.config_path, args.conv_layers_params, args.fc_layers, continuous=args.continuous)
