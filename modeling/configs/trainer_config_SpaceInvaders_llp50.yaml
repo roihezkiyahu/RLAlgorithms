@@ -1,17 +1,17 @@
 trainer:
   game: "SpaceInvadersNoFrameskip-v4"
   render_mode: "rgb_array"
-  episodes: 25000
+  episodes: 100000
   learning_rate: 1e-4
   gamma: 0.99
   n_memory_episodes: 500
   prefix_name: ""
-  folder: "logging/SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs64"
+  folder: "logging/SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs64_100kepisodes_epsdcay1000"
   save_gif_every_x_epochs: 500
   batch_size: 64
   EPS_START: 1
   EPS_END: 0.1
-  EPS_DECAY: 250
+  EPS_DECAY: 1000
   TAU: 5e-4
   max_episode_len: 1500
   use_ddqn: true
@@ -71,7 +71,7 @@ conv_layers_params:
     padding: 1
   - in_channels: 32
     out_channels: 64
-    kernel_size: 5
+    kernel_size: 3
     stride: 2
     padding: 1
 

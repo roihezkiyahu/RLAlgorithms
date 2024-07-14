@@ -241,12 +241,12 @@ if __name__ == "__main__":
     # config_path = os.path.join("modeling", "configs", "trainer_config_MsPacman.yaml")
     # train_agent(config_path, None, None)
 
-    config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp5.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp5.yaml")
+    # train_agent(config_path, None, None)
 
     # SpaceInvaders
-    config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders.yaml")
+    # train_agent(config_path, None, None)
 
     config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_llp50.yaml")
     train_agent(config_path, None, None)
@@ -258,14 +258,14 @@ if __name__ == "__main__":
     # train_agent(config_path, conv_layers_params, fc_layers)
 
     # Breakout
-    config_path = os.path.join("modeling", "configs", "trainer_config_Breakout.yaml")
-    train_agent(config_path, None, None)
-
-    config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp5.yaml")
-    train_agent(config_path, None, None)
-
-    config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp10.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "trainer_config_Breakout.yaml")
+    # train_agent(config_path, None, None)
+    #
+    # config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp5.yaml")
+    # train_agent(config_path, None, None)
+    #
+    # config_path = os.path.join("modeling", "configs", "trainer_config_Breakout_llp10.yaml")
+    # train_agent(config_path, None, None)
 
     # SkiingDeterministic
     config_path = os.path.join("modeling", "configs", "trainer_config_Skiing.yaml")
