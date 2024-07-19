@@ -164,6 +164,8 @@ class Trainer:
         self.target_net = clone_model.to(self.device)
         if config['folder']:
             os.makedirs(config['folder'], exist_ok=True)
+            if self.gcs_bucket:
+                self.upload_to_gcs()
             self.prefix_name = os.path.join(config['folder'], config['prefix_name'])
         else:
             self.prefix_name = config['prefix_name']
