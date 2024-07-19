@@ -5,7 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from Atari_runner import train_agent
 import argparse
-from modify_config import modify_config_and_upload
+from trainer.modify_config import modify_config_and_upload
 
 def get_args():
     args_parser = argparse.ArgumentParser()
