@@ -7,7 +7,7 @@ trainer:
   n_memory_episodes: 500
   prefix_name: ""
   folder: "logging/BreakoutNoFrameskip_llp5_epsdecay1500"
-  save_gif_every_x_epochs: 500
+  save_gif_every_x_epochs: 1
   batch_size: 128
   EPS_START: 1
   EPS_END: 0.1
