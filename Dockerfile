@@ -8,9 +8,6 @@ ENV TZ=America/New_York
 # Set the working directory
 WORKDIR /
 
-# Clone the repository during the build process
-RUN git clone https://github.com/yourusername/RLAlgorithms.git
-
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
@@ -45,6 +42,9 @@ ENV PATH=/opt/conda/bin:$PATH
 # Copy the current directory contents into the Docker image at /app
 #COPY . .
 
+# Clone the repository during the build process
+RUN git clone https://github.com/yourusername/RLAlgorithms.git
+
 RUN conda env create -f /RLAlgorithms/environment.yml || true
 
 RUN conda install -y python=3.8 && \
@@ -62,9 +62,7 @@ RUN pip install pygame \
     gymnasium[atari] \
     google-cloud-storage
 
-
-
-ENV GOOGLE_APPLICATION_CREDENTIALS="/app/RLAlgorithms/trainer/service-account-key.json"
+ENV GOOGLE_APPLICATION_CREDENTIALS="/RLAlgorithms/trainer/service-account-key.json"
 
 # RUN AutoRom
 
