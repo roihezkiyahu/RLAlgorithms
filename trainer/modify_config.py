@@ -19,7 +19,7 @@ def modify_config_and_upload(config_path, gcs_bucket_name):
         yaml.dump(config, file)
 
     # Upload the modified configuration to GCS
-    upload_to_gcs(gcs_bucket_name, config, gcs_config_path)
+    upload_to_gcs(gcs_bucket_name, config_path, gcs_config_path)
     print(f"Modified config uploaded to gs://{gcs_bucket_name}/{gcs_config_path} v1")
 
 
