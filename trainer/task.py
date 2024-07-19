@@ -40,10 +40,10 @@ def get_args():
 
     return args_parser.parse_args()
 
-
 args = get_args()
 
 modify_config_and_upload(args.config_path, args.bucket)
+print(args.config_path)
 print(args)
 
 train_agent(args.config_path, args.conv_layers_params, args.fc_layers, continuous=args.continuous)
