@@ -22,6 +22,8 @@ import yaml
 import threading
 import queue
 from modeling.logger import Logger
+from google.cloud import storage
+import glob
 
 
 class Debugger:
@@ -153,6 +155,7 @@ class Trainer:
         self.save_model_every_n = int(config['save_model_every_n'])
         self.warmup_steps = int(config['warmup_steps'])
         self.probs = config.get('prior_probs', None)
+        self.gcs_bucket = config.get("gcs_bucket", None)
         if isinstance(self.game_wrapper, type(None)):
             self.game_wrapper = AtariGameWrapper(self.game)
         if isinstance(self.visualizer, type(None)):
@@ -460,6 +463,17 @@ class Trainer:
             torch.save(self.model.state_dict(),
                        f"{self.prefix_name}best_model_{episode + 1}_score_{int(mean_score)}.pt")
 
+    def upload_to_gcs(self, logging_folder, bucket_name):
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
+
+        for local_file in glob.glob(logging_folder + '/**', recursive=True):
+            print(local_file)
+            if os.path.isfile(local_file):
+                remote_path = os.path.join(logging_folder, local_file)
+                blob = bucket.blob(remote_path)
+                blob.upload_from_filename(local_file)
+
     def train(self):
         for episode in range(self.episodes):
             total_reward, score = self.logger.time_and_log(self.run_episode, "run_episode", episode)
@@ -473,7 +487,7 @@ class Trainer:
             self.rewards_memory.append(total_reward)
             self.score_memory.append(score)
             self.logger.time_and_log(self.log_and_compile_gif, "log_and_compile_gif", episode)
-            if (episode+1) % self.validate_every_n_episodes == 0:
+            if (episode + 1) % self.validate_every_n_episodes == 0:
                 self.validate_score(episode)
                 if self.early_stopping:
                     mean_scores = np.array([val_log["Mean Score"] for val_log in self.validation_log])
@@ -481,3 +495,7 @@ class Trainer:
                         print("early stopped")
                         break
                 self.logger.dump_log("training_logs.csv")
+
+            # Upload to GCS if gcs_bucket is not None
+            if self.gcs_bucket:
+                self.upload_to_gcs('path/to/local/directory', self.gcs_bucket, self.prefix_name)
