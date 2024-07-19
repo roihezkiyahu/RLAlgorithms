@@ -469,6 +469,7 @@ class Trainer:
 
         for local_file in glob.glob(logging_folder + '/**', recursive=True):
             print(local_file)
+            print("")
             if os.path.isfile(local_file):
                 remote_path = os.path.join(logging_folder, local_file)
                 blob = bucket.blob(remote_path)
