@@ -18,12 +18,14 @@ def modify_config_and_upload(config_path, gcs_bucket_name):
     with open(modified_config_path, 'w') as file:
         yaml.dump(config, file)
 
+    # update the ccurrent config
+    with open(config_path, 'w') as file:
+        yaml.dump(config, file)
+
     # Upload the modified configuration to GCS
     upload_to_gcs(gcs_bucket_name, modified_config_path, gcs_config_path)
     print(f"Modified config uploaded to gs://{gcs_bucket_name}/{gcs_config_path} v1")
     new_config_path = f"gs://{gcs_bucket_name}/{gcs_config_path}"
-    return new_config_path
-
 
 def upload_to_gcs(bucket_name, source_file_name, destination_blob_name):
     """Uploads a file to the bucket."""

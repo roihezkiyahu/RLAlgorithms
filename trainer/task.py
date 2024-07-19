@@ -43,7 +43,7 @@ def get_args():
 
 args = get_args()
 
-args.config_path = modify_config_and_upload(args.config_path, args.bucket)
+modify_config_and_upload(args.config_path, args.bucket)
 print(args)
 
 train_agent(args.config_path, args.conv_layers_params, args.fc_layers, continuous=args.continuous)
