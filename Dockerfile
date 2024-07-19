@@ -5,8 +5,11 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/New_York
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /
+
+# Clone the repository during the build process
+RUN git clone https://github.com/yourusername/RLAlgorithms.git
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -40,7 +43,7 @@ ENV PATH=/opt/conda/bin:$PATH
 #     conda install -y -c pytorch pytorch torchvision
 
 # Copy the current directory contents into the Docker image at /app
-COPY . .
+#COPY . .
 
 RUN conda env create -f /RLAlgorithms/environment.yml || true
 
@@ -56,8 +59,12 @@ RUN pip install pygame \
     "autorom[accept-rom-license]" \
     ale_py \
     gymnasium \
-    gymnasium[atari]
+    gymnasium[atari] \
+    google-cloud-storage
 
+
+
+ENV GOOGLE_APPLICATION_CREDENTIALS="/app/RLAlgorithms/trainer/service-account-key.json"
 
 # RUN AutoRom
 
@@ -68,4 +75,4 @@ ENV PATH /opt/conda/envs/RLAlgorithms/bin:$PATH
 RUN echo "source activate RLAlgorithms" > ~/.bashrc
 
 # Sets up the entry point to invoke the trainer.
-ENTRYPOINT ["python", "-m", "RLAlgorithms.trainer.task"]
+CMD ["sh", "-c", "git pull && python RLAlgorithms.trainer.modify_config.py && python -m RLAlgorithms.trainer.task"]

@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from Atari_runner import train_agent
 import argparse
+from modify_config import modify_config_and_upload
 
 def get_args():
     args_parser = argparse.ArgumentParser()
@@ -31,11 +32,18 @@ def get_args():
         help='continuous.',
         default=None)
 
+    args_parser.add_argument(
+        '--bucket',
+        help='bucket to upload to.',
+        default='rl-on-gcp-427712-rl-algos'
+    )
+
     return args_parser.parse_args()
 
 
 args = get_args()
 
+args.config_path = modify_config_and_upload(args.config_path, args.bucket)
 print(args)
 
 train_agent(args.config_path, args.conv_layers_params, args.fc_layers, continuous=args.continuous)
