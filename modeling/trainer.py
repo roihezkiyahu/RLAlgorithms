@@ -488,13 +488,14 @@ class Trainer:
             self.logger.time_and_log(self.log_and_compile_gif, "log_and_compile_gif", episode)
             if (episode + 1) % self.validate_every_n_episodes == 0:
                 self.validate_score(episode)
+                self.logger.dump_log("training_logs.csv")
+                # Upload to GCS if gcs_bucket is not None
+                if self.gcs_bucket:
+                    self.upload_to_gcs(self.prefix_name, self.gcs_bucket)
+
                 if self.early_stopping:
                     mean_scores = np.array([val_log["Mean Score"] for val_log in self.validation_log])
                     if np.all(max(mean_scores) > mean_scores[-min(self.early_stopping, len(mean_scores)):]):
                         print("early stopped")
                         break
-                self.logger.dump_log("training_logs.csv")
 
-            # Upload to GCS if gcs_bucket is not None
-            if self.gcs_bucket:
-                self.upload_to_gcs(self.prefix_name, self.gcs_bucket)
