@@ -62,6 +62,9 @@ RUN pip install pygame \
     gymnasium[atari] \
     google-cloud-storage
 
+
+COPY /service-account-key.json /RLAlgorithms/trainer/service-account-key.json
+
 ENV GOOGLE_APPLICATION_CREDENTIALS="/RLAlgorithms/trainer/service-account-key.json"
 
 # RUN AutoRom
@@ -73,4 +76,4 @@ ENV PATH /opt/conda/envs/RLAlgorithms/bin:$PATH
 RUN echo "source activate RLAlgorithms" > ~/.bashrc
 
 # Sets up the entry point to invoke the trainer.
-CMD ["sh", "-c", "cd /RLAlgorithms && git pull && python -m RLAlgorithms.trainer.task"]
+CMD ["sh", "-c", "cd /RLAlgorithms && git pull && cd .. && python -m RLAlgorithms.trainer.task"]
