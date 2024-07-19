@@ -468,10 +468,8 @@ class Trainer:
         bucket = storage_client.bucket(bucket_name)
 
         for local_file in glob.glob(logging_folder + '/**', recursive=True):
-            print(local_file)
-            print("")
             if os.path.isfile(local_file):
-                remote_path = os.path.join(logging_folder, local_file)
+                remote_path = local_file
                 blob = bucket.blob(remote_path)
                 blob.upload_from_filename(local_file)
 
