@@ -4,7 +4,7 @@ from google.cloud import storage
 
 
 def modify_config_and_upload(config_path, gcs_bucket_name):
-    gcs_config_path = f"configs / {os.path.basename(config_path)}"
+    gcs_config_path = f"configs/{os.path.basename(config_path)}"
     # Read the YAML configuration file
     with open(config_path, 'r') as file:
         config = yaml.safe_load(file)
