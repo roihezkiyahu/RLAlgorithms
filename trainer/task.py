@@ -14,7 +14,7 @@ def get_args():
     args_parser.add_argument(
         '--config_path',
         help='Config path for training.',
-        default=os.path.join("RLAlgorithms", "modeling", "configs", "trainer_config_Breakout_llp5.yaml"),
+        default=os.path.join("RLAlgorithms", "modeling", "configs", "trainer_config_MsPacman.yaml"),
         type=str)
 
     args_parser.add_argument(
