@@ -37,6 +37,8 @@ class PPOAgent(A2CAgent):
                 break
             self.update_model(observations, actions, rewards, dones, values, obs_torch, old_log_probs)
             self.save_diagnostics_if_needed(epoch)
+        if self.gcs_bucket:
+            self.upload_to_gcs()
         print(f'The training was done over a total of {episode_count} episodes')
 
     def initialize_batch_variables(self, batch_size):

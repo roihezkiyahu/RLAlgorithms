@@ -192,6 +192,8 @@ class A2CAgent(Trainer):
                 break
             self.update_model(observations, actions, rewards, dones, values, obs_torch)
             self.save_diagnostics_if_needed(epoch)
+        if self.gcs_bucket:
+            self.upload_to_gcs()
         print(f'The training was done over a total of {episode_count} episodes')
 
     def initialize_batch_variables(self, batch_size):
@@ -243,6 +245,8 @@ class A2CAgent(Trainer):
     def save_diagnostics_if_needed(self, epoch):
         if (epoch + 1) % self.save_diagnostics == 0:
             self.debugger.plot_diagnostics(epoch + 1)
+            if self.gcs_bucket:
+                self.upload_to_gcs()
             print(f"saved diagnostics epoch: {epoch + 1}")
 
     def optimize_model(self, observations, actions, returns, advantages):

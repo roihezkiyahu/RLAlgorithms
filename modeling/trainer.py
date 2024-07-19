@@ -462,8 +462,11 @@ class Trainer:
             self.best_model = {"model": self.model, "score": mean_score}
             torch.save(self.model.state_dict(),
                        f"{self.prefix_name}best_model_{episode + 1}_score_{int(mean_score)}.pt")
+        if self.gcs_bucket:
+            self.upload_to_gcs()
 
-    def upload_to_gcs(self, logging_folder, bucket_name):
+    def upload_to_gcs(self):
+        logging_folder, bucket_name = self.prefix_name, self.gcs_bucket
         storage_client = storage.Client()
         bucket = storage_client.bucket(bucket_name)
 
@@ -489,10 +492,6 @@ class Trainer:
             if (episode + 1) % self.validate_every_n_episodes == 0:
                 self.validate_score(episode)
                 self.logger.dump_log("training_logs.csv")
-                # Upload to GCS if gcs_bucket is not None
-                if self.gcs_bucket:
-                    self.upload_to_gcs(self.prefix_name, self.gcs_bucket)
-
                 if self.early_stopping:
                     mean_scores = np.array([val_log["Mean Score"] for val_log in self.validation_log])
                     if np.all(max(mean_scores) > mean_scores[-min(self.early_stopping, len(mean_scores)):]):
