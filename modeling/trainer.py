@@ -498,4 +498,4 @@ class Trainer:
 
             # Upload to GCS if gcs_bucket is not None
             if self.gcs_bucket:
-                self.upload_to_gcs('path/to/local/directory', self.gcs_bucket, self.prefix_name)
+                self.upload_to_gcs(self.prefix_name, self.gcs_bucket)
