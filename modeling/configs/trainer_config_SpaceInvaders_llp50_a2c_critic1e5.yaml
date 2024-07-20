@@ -6,12 +6,12 @@ trainer:
   gamma: 0.99
   n_memory_episodes: 500
   prefix_name: ""
-  folder: "logging/SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs64_100kepisodes_epsdcay2k"
+  folder: "logging/SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs64_a2c_critic1e5"
   save_gif_every_x_epochs: 500
   batch_size: 64
   EPS_START: 1
   EPS_END: 0.1
-  EPS_DECAY: 2000
+  EPS_DECAY: 1000
   TAU: 5e-4
   max_episode_len: 1500
   use_ddqn: true
@@ -33,12 +33,13 @@ trainer:
   reset_options:
     randomize_position: false
   warmup_steps: 5000
-  value_network_lr: 1e-4 # for A2C only
+  value_network_lr: 1e-5 # for A2C only
   actor_network_lr: 1e-4 # for A2C only
   entropy_coefficient: 0.01 # for A2C only
   input_shape: (11, 12, 12) # for A2C only
   epochs: 150000 # for A2C only
   early_stopping: 30
+  a2c: true
 
 
 atari_game_wrapper:
