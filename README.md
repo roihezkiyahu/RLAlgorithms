@@ -13,7 +13,7 @@ This repo was made to support my SnakeAgent project - teaching an agent to reach
 |:---------------------:|:-----------------:|
 | MountainCar | ![](gifs/MountainCar_1e3_disc05_rand_val_episode_2700_score_-85.gif) |
 |:---------------------:|:-----------------:|
-| Breakout | ![](gifs/BreakoutNoFrameskip_llp5_val_episode_10000_score_32.gif) |
+| Breakout | ![](gifs/BreakoutNoFrameskip_llp5_epsdecay1500_val_episode_44000_score_258.0.gif) |
 |:---------------------:|:-----------------:|
 | CarRacing | ![](gifs/CarRacing_5e4_disc099_dueling_val_episode_1000_score_384.gif) |
 |:---------------------:|:-----------------:|
