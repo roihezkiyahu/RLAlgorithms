@@ -138,6 +138,10 @@ COPY /service-account-key.json /RLAlgorithms/trainer/service-account-key.json
 
 ENV GOOGLE_APPLICATION_CREDENTIALS="/RLAlgorithms/trainer/service-account-key.json"
 
+# Copy the entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Activate the Conda environment
 ENV PATH /opt/conda/envs/RLAlgorithms/bin:$PATH
 
@@ -145,4 +149,4 @@ ENV PATH /opt/conda/envs/RLAlgorithms/bin:$PATH
 RUN echo "source activate RLAlgorithms" > ~/.bashrc
 
 # Sets up the entry point to invoke the trainer.
-ENTRYPOINT ["sh", "-c", "cd /RLAlgorithms && git pull && cd .."]
+ENTRYPOINT ["/entrypoint.sh"]
