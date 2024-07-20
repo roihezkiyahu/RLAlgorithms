@@ -139,7 +139,7 @@ COPY /service-account-key.json /RLAlgorithms/trainer/service-account-key.json
 ENV GOOGLE_APPLICATION_CREDENTIALS="/RLAlgorithms/trainer/service-account-key.json"
 
 # Copy the entrypoint script
-COPY entrypoint.sh /entrypoint.sh
+COPY /entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Activate the Conda environment
