@@ -6,7 +6,7 @@ trainer:
   gamma: 0.99
   n_memory_episodes: 500
   prefix_name: ""
-  folder: "logging/SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs64"
+  folder: "logging/SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs64_diffnet"
   save_gif_every_x_epochs: 500
   batch_size: 64
   EPS_START: 1
@@ -55,25 +55,20 @@ atari_game_wrapper:
 
 conv_layers_params:
   - in_channels: 4
-    out_channels: 8
-    kernel_size: 5
-    stride: 4
-    padding: 1
-  - in_channels: 8
-    out_channels: 16
-    kernel_size: 5
-    stride: 4
-    padding: 1
-  - in_channels: 16
     out_channels: 32
-    kernel_size: 5
-    stride: 2
+    kernel_size: 8
+    stride: 4
     padding: 1
   - in_channels: 32
+    out_channels: 64
+    kernel_size: 4
+    stride: 2
+    padding: 1
+  - in_channels: 64
     out_channels: 64
     kernel_size: 3
     stride: 2
     padding: 1
 
 fc_layers:
-  - 256
+  - 512
