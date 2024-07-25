@@ -61,7 +61,7 @@ conv_layers_params:
     stride: 2
     padding: 1
   - in_channels: 32
-    out_channels: 32
+    out_channels: 64
     kernel_size: 5
     stride: 2
     padding: 1
