@@ -19,4 +19,4 @@ This repo was made to support my SnakeAgent project - teaching an agent to reach
 |:---------------------:|:-----------------:|
 | MsPacman | ![](gifs/MsPacmanNoFrameskip_5e4_gamma95_llp100_val_episode_6250_score_2030.gif) |
 |:---------------------:|:-----------------:|
-| SpaceInvaders | ![](gifs/SpaceInvadersNoFrameskip_val_episode_4250_score_580.gif) |
+| SpaceInvaders | ![](gifs/val_episode_2550SpaceInvadersNoFrameskip_1e4_llp50_dsp01_bs64_diffnet_0_score_955.0.gif) |
