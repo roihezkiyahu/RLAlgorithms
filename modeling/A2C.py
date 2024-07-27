@@ -127,7 +127,7 @@ class A2CDebugger():
         self.plot_entropy(epochs)
         self.plot_scores(window)
         plt.tight_layout()
-        filename = f"{self.agent.prefix_name}_{epoch}_diagnostics.png"
+        filename = f"{self.agent.prefix_name}_diagnostics.png"
         plt.savefig(filename)
         print(f"Saved diagnostics to {filename}")
         plt.close()
@@ -143,8 +143,27 @@ class A2CAgent(Trainer):
             config = config_path
         self.value_network = value_network.to(self.device)
         self.actor_network = actor_network.to(self.device)
-        self.value_optimizer = optim.RMSprop(self.value_network.parameters(), lr=float(config["value_network_lr"]))
-        self.actor_optimizer = optim.RMSprop(self.actor_network.parameters(), lr=float(config["actor_network_lr"]))
+        if not config['optimizer']:
+            self.value_optimizer = optim.RMSprop(self.value_network.parameters(), lr=float(config["value_network_lr"]))
+            self.actor_optimizer = optim.RMSprop(self.actor_network.parameters(), lr=float(config["actor_network_lr"]))
+        else:
+            if isinstance(config['optimizer'], str):
+                if config['optimizer'] == "SGD":
+                    self.value_optimizer = optim.SGD(self.value_network.parameters(),
+                                                         lr=float(config["value_network_lr"]))
+                    self.actor_optimizer = optim.SGD(self.actor_network.parameters(),
+                                                         lr=float(config["actor_network_lr"]))
+                if config['optimizer'] == "Adam":
+                    self.value_optimizer = optim.Adam(self.value_network.parameters(),
+                                                         lr=float(config["value_network_lr"]))
+                    self.actor_optimizer = optim.Adam(self.actor_network.parameters(),
+                                                         lr=float(config["actor_network_lr"]))
+            else:
+                self.value_optimizer = config['optimizer'](self.value_network.parameters(),
+                                                     lr=float(config["value_network_lr"]))
+                self.actor_optimizer = config['optimizer'](self.actor_network.parameters(),
+                                                     lr=float(config["actor_network_lr"]))
+
         self.entropy_coefficient = float(config["entropy_coefficient"])
         self.normalize_adv = config.get("normalize_adv", False)
         input_shape = config["input_shape"]
@@ -259,7 +278,7 @@ class A2CAgent(Trainer):
     def prepare_tensors(self, actions, returns, advantages, observations):
         actions = F.one_hot(torch.tensor(actions, dtype=torch.int64), self.n_actions).float().to(self.device)
         returns = torch.tensor(returns[:, None], dtype=torch.float).to(self.device)
-        advantages = torch.tensor(advantages, dtype=torch.float).to(self.device) # TODO add normzlization option
+        advantages = torch.tensor(advantages, dtype=torch.float).to(self.device)
         observations = torch.tensor(observations, dtype=torch.float).to(self.device)
         return actions, returns, advantages, observations
 

@@ -114,7 +114,7 @@ class Debugger:
         self.plot_epsilon()
         self.plot_scores(window)
         plt.tight_layout()
-        filename = f"{self.agent.prefix_name}_{epoch}_diagnostics.png"
+        filename = f"{self.agent.prefix_name}_diagnostics.png"
         plt.savefig(filename)
         print(f"Saved diagnostics to {filename}")
         plt.close()
