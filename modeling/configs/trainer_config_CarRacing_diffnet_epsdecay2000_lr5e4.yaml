@@ -2,16 +2,16 @@ trainer:
   game: "CarRacing-v2"
   render_mode: "rgb_array"
   episodes: 15000
-  learning_rate: 5e-3
+  learning_rate: 5e-4
   gamma: 0.9
   n_memory_episodes: 500
   prefix_name: ""
-  folder: "logging/CarRacing_le5e3"
+  folder: "logging/CarRacing_le5e4_diffnet_eps3k"
   save_gif_every_x_epochs: 500
   batch_size: 128
   EPS_START: 1
   EPS_END: 0.05
-  EPS_DECAY: 250
+  EPS_DECAY: 3000
   TAU: 5e-4
   max_episode_len: 500
   use_ddqn: true
@@ -48,30 +48,25 @@ atari_game_wrapper:
   random_steps_range: [10, 50]
   stack_n_frames: 3
   normalize_factor: 255
-  initial_frame_skip: 40
+  initial_frame_skip: 35
   frame_skip: null
 
 conv_layers_params:
   - in_channels: 4
-    out_channels: 8
-    kernel_size: 5
-    stride: 4
-    padding: 1
-  - in_channels: 8
-    out_channels: 16
-    kernel_size: 5
-    stride: 4
-    padding: 1
-  - in_channels: 16
     out_channels: 32
-    kernel_size: 5
-    stride: 2
+    kernel_size: 8
+    stride: 4
     padding: 1
   - in_channels: 32
+    out_channels: 64
+    kernel_size: 4
+    stride: 2
+    padding: 1
+  - in_channels: 64
     out_channels: 64
     kernel_size: 3
     stride: 2
     padding: 1
 
 fc_layers:
-  - 256
+  - 512

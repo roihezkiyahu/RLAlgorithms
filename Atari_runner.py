@@ -248,11 +248,11 @@ if __name__ == "__main__":
     # config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders.yaml")
     # train_agent(config_path, None, None)
 
-    config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_llp50_gamma90.yaml")
-    train_agent(config_path, None, None)
-
-    config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_llp50_diffnet.yaml")
-    train_agent(config_path, None, None)
+    # config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_llp50_gamma90.yaml")
+    # train_agent(config_path, None, None)
+    #
+    # config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_llp50_diffnet.yaml")
+    # train_agent(config_path, None, None)
 
 
     # config_path = os.path.join("modeling", "configs", "trainer_config_SpaceInvaders_llp250.yaml")
@@ -279,6 +279,17 @@ if __name__ == "__main__":
     # train_agent(config_path, None, None)
 
     # CarRacing
+    # config_path = os.path.join("modeling", "configs", "trainer_config_CarRacing_diffnet.yaml")
+    # train_agent(config_path, None, None, continuous=False)
+
+    config_path = os.path.join("modeling", "configs", "trainer_config_CarRacing_lr1e4.yaml")
+    train_agent(config_path, None, None, continuous=False)
+
+    config_path = os.path.join("modeling", "configs", "trainer_config_CarRacing_diffnet_epsdecay2000.yaml")
+    train_agent(config_path, None, None, continuous=False)
+
+    # trainer_config_CarRacing_diffnet_epsdecay3k.yaml
+
     config_path = os.path.join("modeling", "configs", "trainer_config_CarRacing.yaml")
     train_agent(config_path, None, None, continuous=False)
 

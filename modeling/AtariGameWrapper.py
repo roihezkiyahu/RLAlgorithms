@@ -7,6 +7,7 @@ import numpy as np
 import ale_py
 from numpy.random import Generator, PCG64, SeedSequence
 
+
 class AtariGameViz:
     def __init__(self, game, device):
         self.game = game
@@ -40,24 +41,33 @@ class AtariGameViz:
 
 class Preprocessor:
     def __init__(self, config, device):
-        self.resize_img = config['resize_img']
-        self.gray_scale = config['gray_scale']
-        self.normalize_factor = float(config['normalize_factor'])
+        self.resize_img = config.get('resize_img', None)
+        self.gray_scale = config.get('gray_scale', False)
+        self.normalize_factor = float(config.get('normalize_factor', 1.0))
+        self.crop_values = config.get('crop_values', None)  # New crop_values parameter
         self.device = device
 
     def preprocess_state(self, obs):
         obs = torch.tensor(obs, dtype=torch.float32, device=self.device)
+
+        # Crop the image if crop_values are provided
+        if self.crop_values:
+            x1, x2, y1, y2 = self.crop_values
+            obs = obs[y1:y2, x1:x2]  # Apply cropping
+
         if len(obs.shape) == 2:
-            obs = obs.unsqueeze(0)
+            obs = obs.unsqueeze(0)  # Add channel dimension for grayscale images
         elif len(obs.shape) == 3:
-            obs = obs.permute(2, 0, 1)
+            obs = obs.permute(2, 0, 1)  # Convert from HWC to CHW
             if self.resize_img:
                 obs = F.interpolate(obs.unsqueeze(0), size=self.resize_img[::-1], mode='bicubic',
                                     align_corners=False).squeeze(0)
             if self.gray_scale and obs.shape[0] == 3:
-                obs = obs.mean(dim=0, keepdim=True)
+                obs = obs.mean(dim=0, keepdim=True)  # Convert to grayscale
+
         if self.normalize_factor != 1:
-            obs.div_(self.normalize_factor)
+            obs.div_(self.normalize_factor)  # Normalize
+
         return obs.cpu()
 
     @staticmethod
@@ -77,6 +87,8 @@ class AtariGameWrapper:
         self.stack_n_frames = int(config['stack_n_frames'])
         self.losing_live_penalty = int(config.get("losing_live_penalty", 0))
         self.initial_frame_skip = int(config.get("initial_frame_skip", 0))
+        self.green_thresh = int(config.get("green_thresh", 0))
+        self.green_penalty = int(config.get("green_penalty", 0))
         self.probs = config.get("prior_probs", None)
         self.lives = 0
         self.stacked_frames = None
@@ -96,12 +108,25 @@ class AtariGameWrapper:
     def get_score(self):
         return np.sum(self.episode_rewards)
 
+    def get_surrounding_green_penalty(self, obs, reward):
+        """
+        extra penalty for car racing game if it surrounded by grass
+        """
+        if "CarRacing" in self.game.__str__():
+            mean_green = np.mean(obs.astype(np.uint8)[60:84, 32:64, 1])
+            mean_red = obs.astype(np.uint8)[67:77, 46:50, 0].mean()
+            if mean_green > self.green_thresh and mean_red > 120:
+                reward -= self.green_penalty
+        return reward
+
     def step(self, action):
         obs, reward, done, trunc, info = self.game.step(action)
         self.episode_rewards = np.append(self.episode_rewards, reward)
         if self.lives > info.get('lives', 0):
             reward -= self.losing_live_penalty
             self.lives = info.get('lives')
+        if self.green_thresh:
+            reward = self.get_surrounding_green_penalty(obs, reward)
         obs = self.preprocessor.preprocess_state(obs)
         if self.stack_n_frames > 0:
             self.stacked_frames = torch.roll(self.stacked_frames, shifts=-1, dims=0)
